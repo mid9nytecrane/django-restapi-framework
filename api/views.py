@@ -13,7 +13,7 @@ from blogs.serializers import BlogSerializer, CommentSerializer
 from blogs.models import Blog, Comment
 from .paginations import CustomPaginaiton
 from .filters import EmployeeFilter
-
+from rest_framework.filters import SearchFilter
 
 
 
@@ -199,12 +199,16 @@ class EmployeeViewset(viewsets.ModelViewSet):
     pagination_class = CustomPaginaiton
     #filterset_fields = ['designation'] 
     filterset_class = EmployeeFilter
+ 
 
 
 
 class BlogsView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['blog_title','blog_body']
+
 
     def get(self,request):
         return self.list(request)
