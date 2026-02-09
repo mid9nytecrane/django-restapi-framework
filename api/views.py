@@ -11,6 +11,7 @@ from employees.models import Employee
 from rest_framework import mixins,generics, viewsets 
 from blogs.serializers import BlogSerializer, CommentSerializer
 from blogs.models import Blog, Comment
+from .paginations import CustomPaginaiton
 
 @api_view(["GET", "POST"])
 def studentsView(request):
@@ -191,6 +192,7 @@ class EmployeeViewset(viewsets.ViewSet):
 class EmployeeViewset(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializers
+    pagination_class = CustomPaginaiton
 
 
 
